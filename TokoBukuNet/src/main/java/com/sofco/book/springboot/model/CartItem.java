@@ -5,6 +5,7 @@ import com.sofco.book.springboot.entity.Buku;
 public class CartItem {
 	private String id;
 	private String idBuku;
+	private String idPembelian;
 	private String judul;
 	private String gambar;
 	private Long harga;
@@ -27,6 +28,12 @@ public class CartItem {
 	}
 	public void setIdBuku(String idBuku) {
 		this.idBuku = idBuku;
+	}
+	public String getIdPembelian() {
+		return idPembelian;
+	}
+	public void setIdPembelian(String idPembelian) {
+		this.idPembelian = idPembelian;
 	}
 	public String getJudul() {
 		return judul;

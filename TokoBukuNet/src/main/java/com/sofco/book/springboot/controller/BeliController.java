@@ -47,7 +47,7 @@ public class BeliController {
 		for(int i=0;i<cartItem.length;i++) {
 			// insert pembelian detail
 			detil.setId(String.valueOf(id+1));
-			detil.setIdPembelian(idPembelian);
+			detil.setIdPembelian(cartItem[i].getIdPembelian());
 			detil.setIdBuku(cartItem[i].getIdBuku());
 			detil.setQty(cartItem[i].getJumlahStok());
 			detil.setHarga(cartItem[i].getHarga());
@@ -60,5 +60,6 @@ public class BeliController {
 			buku.setJumlahStok(jumlahStok);
 			bukuRepository.save(buku);
 		}
+		
 	}	
 }

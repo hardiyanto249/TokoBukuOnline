@@ -33,6 +33,7 @@ public interface BukuRepository extends JpaRepository<Buku, String>{
 		+  "order by pb.idBuku")
 	Page<Buku> findByBukuKategoriAndAktifContaining(@Param("kategori") String kategori, Pageable pageable);
 	
+	
 	@RestResource(path="judul")
 	@Query("select a from buku a left join promo_buku pb"
 			+  " on a.id = pb.idBuku and current_date >= pb.tanggalAwal "
