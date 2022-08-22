@@ -1,0 +1,4 @@
+<div class="list-group" *ngFor="let buku of uniqueKategori">
+    <a routerLink="/kategori/{{buku}}" class="list-group-item" routerLinkActive="bg-primary text-white font-weight-bold">{{buku.replace("_"," ") | uppercase}}</a>
+</div>
+

@@ -1,0 +1,23 @@
+
+<h1> Toko Buku</h1>
+<br>
+<table border="1" class="table">
+    <thead>
+        <tr>
+            <th></th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Price</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let buku of bukus">
+            <td>
+                <img [src]="buku.gambar" height="50"/>
+            </td>
+            <td>{{buku.judul}}</td>
+            <td>{{buku.sinopsis}}</td>
+            <td>{{buku.harga | currency: 'Rp.'}}</td>
+        </tr>
+    </tbody>
+</table>

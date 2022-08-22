@@ -1,0 +1,9 @@
+<div class="navbar-nav ml-2">
+    <input type="text" #searchInput 
+    (keyup.enter)="searchBuku(searchInput.value)"
+    class="form-control"
+        placeholder="Search Judul Buku">
+    <button type="submit" 
+    (click)="searchBuku(searchInput.value)"
+    class="btn btn-primary ml-2">Cari</button>
+</div>

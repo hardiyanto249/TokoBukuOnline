@@ -1,0 +1,82 @@
+<div class="row">
+    
+    <div class="col-lg-3">
+        <!-- category component -->
+        <h5> Kategori Buku:</h5>
+        <app-kategori></app-kategori>
+    </div>
+
+    <!-- master details for book -->
+    <div class="col-lg-9" *ngFor="let buku of bukus">
+
+        <div class="row">
+
+            <!-- To display the image -->
+            <div class="col-12 col-md-4">
+
+                <div class="thumbnail">
+                    <img src="{{buku.gambar}}" width="250" height="300" alt="book" />
+                </div>
+
+            </div>
+
+            <!-- To display the book info -->
+            <div class="col-12 col-md-8">
+
+                <h3>{{buku.judul}}</h3>
+                <hr/>
+
+                <p class="card-text">{{buku.kategori.replace("_"," ")|uppercase}}</p>
+                <hr/>
+                    
+                <p>{{buku.sinopsis}}</p>
+                <hr/>
+
+                <div *ngIf="promoBukus.length>0; then thenBlockPromo else elseBlockNonPromo"></div>
+                
+                <ng-template #thenBlockPromo>
+                    <h4>Harga Promo: <strong>{{promoBukus[0].hargaPromo | currency: 'Rp.'}}</strong></h4>
+                    <hr/>
+                </ng-template>
+                <ng-template #elseBlockNonPromo>
+                    <h4>Harga: <strong>{{buku.harga | currency: 'Rp.'}}</strong></h4>
+                    <hr/>    
+                </ng-template>
+
+                <p class="card-text">Penulis:   {{buku.penulis}}<br>Penerbit:   {{buku.penerbit}}</p>
+                <hr/>
+                    
+                <h6>Jumlah Stok: {{buku.jumlahStok}}</h6>
+                <hr/>
+
+                <a routerLink="/tokobuku/{{kategori}}" class="btn btn-success">
+                    <i class="fas fa-arrow-left"></i> Back
+                </a>
+                <div *ngIf="buku.jumlahStok>0; then thenBlock else elseBlock"></div>
+                <ng-template #thenBlock>
+                    <div *ngIf="promoBukus.length>0; then thenBlockCartPromo else elseBlockNonCartPromo"></div>
+                    <ng-template #thenBlockCartPromo>
+                        <button (click)="addToCartPromo(buku,promoBukus[0])" class="btn btn-primary ml-1">
+                            <i class="fas fa-cart-arrow-down"></i> Masuk Keranjang
+                        </button>                                            
+                    </ng-template>
+                    <ng-template #elseBlockNonCartPromo>
+                        <button (click)="addToCart(buku)" class="btn btn-primary ml-1">
+                            <i class="fas fa-cart-arrow-down"></i> Masuk Keranjang
+                        </button>                                            
+                    </ng-template>
+                </ng-template>
+                <ng-template #elseBlock>
+                    <button class="btn btn-secondary ml-1" disabled>
+                        <i class="fas fa-cart-arrow-down"></i> Masuk Keranjang
+                    </button>                
+                </ng-template>
+                </div>
+
+        </div>
+        <div *ngIf="bukus?.length == 0" class="col-md-12 alert alert-warning mt-1">
+            Buku tidak ditemukan
+        </div>    
+    </div>
+    
+</div>

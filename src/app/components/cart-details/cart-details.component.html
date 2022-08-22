@@ -1,0 +1,89 @@
+<div class="row">
+    
+    <div class="col-md-3">
+         <!-- category component -->
+         <h5> Kategori Buku:</h5>
+         <app-kategori></app-kategori>
+    </div>
+
+    <div class="col-md-9">
+        <!-- cart details  -->
+        <div class="row">
+            <div class="col-md-12">
+                <div *ngIf="cartItems.length > 0">
+                    <table class="table table-bordered">
+                        <thead class="bg-dark text-light">
+                            <tr>
+                                <th width="20%">Gambar Produk</th>
+                                <th width="50%">Detail Produk</th>
+                                <th width="30%"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let cartItem of cartItems">
+                                <td>
+                                    <img [src]="cartItem.gambar" class="img-responsive" width="150" height="200" />
+                                </td>
+                                <td>
+                                    <p>{{ cartItem.judul }}</p>
+                                    <p>{{ cartItem.harga | currency: 'Rp.'}}</p>
+                                    <p>Jumlah Stok: {{ cartItem.realStock }}</p>
+                                </td>
+                                <td>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                             <p>Hapus <span (click)="remove(cartItem)" class="float-right pointer text-danger"><i class="fas fa-trash-alt"></i></span> </p>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <button (click)="incrementQuantity(cartItem)" class="btn btn-primary btn-sm float-left">
+                                                <i class="fas fa-plus"></i>
+                                            </button>
+                                        </div>
+                                        <div class="col-md-4 text-center">
+                                            {{cartItem.jumlahStok}}
+                                        </div>
+                                        <div class="col-md-4">
+                                            <button (click)="decrementQuantity(cartItem)" class="btn btn-primary btn-sm float-right">
+                                                <i class="fas fa-minus"></i>
+                                            </button>
+                                        </div>
+                                        <div *ngIf="cartItem.jumlahStok>cartItem.realStock; then thenBlock else elseBlock"></div>
+                                        <ng-template #thenBlock>
+                                            <div class="col-md-12 mt-2">
+                                            <p style="color:red">{{setStock()}}<b>Stok yang tersedia: {{cartItem.realStock}}</b></p>
+                                            </div>
+                                        </ng-template>
+                                        <ng-template #elseBlock>
+                                            <div class="col-md-12 mt-2">
+                                                <p>{{setStock()}}Sub Total:{{ cartItem.jumlahStok * cartItem.harga | currency: 'Rp.'}}</p>
+                                            </div>
+                                        </ng-template>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"></td>
+                                <td class="font-weight-bold">
+                                    <p>Jumlah Total: {{totalQuantity}}</p>
+                                    <p>Biaya Pengiriman: FREE</p>
+                                    <p>Total Harga: {{ totalPrice | currency: 'Rp.' }}</p>
+                                    <div *ngIf="isStock; then thenStokOk else elseStokNOk"></div>
+                                    <ng-template #thenStokOk>
+                                        <a routerLink="/checkout" class="btn btn-primary">Checkout</a>
+                                    </ng-template>
+                                    <ng-template #elseStokNOk>
+                                        <button class="btn btn-secondary" disabled>Checkout</button>
+                                    </ng-template>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div *ngIf="cartItems.length == 0" class="alert alert-warning" role="alert">
+                    Keranjang Anda masih kosong
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>
