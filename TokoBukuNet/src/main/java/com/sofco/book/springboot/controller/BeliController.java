@@ -16,6 +16,9 @@ import com.sofco.book.springboot.entity.PembelianDetilItem;
 import com.sofco.book.springboot.repository.BeliDetilRepository;
 import com.sofco.book.springboot.repository.BeliRepository;
 import com.sofco.book.springboot.repository.BukuRepository;
+import com.sofco.book.springboot.service.BukuService;
+import com.sofco.book.springboot.service.PembelianDetilService;
+import com.sofco.book.springboot.service.PembelianService;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -23,7 +26,7 @@ import com.sofco.book.springboot.repository.BukuRepository;
 public class BeliController {
 	
 	private String idPembelian="";
-
+/*
 	@Autowired
 	private BukuRepository bukuRepository;
 	
@@ -32,11 +35,20 @@ public class BeliController {
 
 	@Autowired
 	private BeliDetilRepository belidetilRepository;
+*/	
+	@Autowired
+	private PembelianService beliService;
+	
+	@Autowired
+	private PembelianDetilService beliDetilService;
+	
+	@Autowired
+	private BukuService bukuService;
 		
 	@PostMapping("/pembelian")
 	public Pembelian infoPembelian(@RequestBody Pembelian pembelian) {
 		idPembelian = pembelian.getId();
-		return beliRepository.save(pembelian);
+		return beliService.beli(pembelian);
 	}
 
 	@PostMapping("/cartdetil")
@@ -52,13 +64,13 @@ public class BeliController {
 			detil.setQty(cartItem[i].getJumlahStok());
 			detil.setHarga(cartItem[i].getHarga());
 			detil.setSubTotal((cartItem[i].getHarga()*cartItem[i].getJumlahStok()));
-			belidetilRepository.save(detil);
+			beliDetilService.beliDetil(detil);
 			
 			// update stok buku
 			buku.setId(cartItem[i].getIdBuku());
 			int jumlahStok = cartItem[i].getRealStock() - cartItem[i].getJumlahStok();
 			buku.setJumlahStok(jumlahStok);
-			bukuRepository.save(buku);
+			bukuService.updateStok(buku);
 		}
 		
 	}	
